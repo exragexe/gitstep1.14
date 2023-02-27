@@ -15,8 +15,8 @@ T* init_array(size_t size)
     return arr;
 }
 
-template <typename T>
-void avg_array(T* arr, T* arr2, int size = -1, int size2 = -1)
+
+int avg_array(int* arr, int* arr2, int size = -1, int size2 = -1)
 {
     int sum = 0;
     if (size == -1)
@@ -39,8 +39,8 @@ void avg_array(T* arr, T* arr2, int size = -1, int size2 = -1)
     cout << "AVG: "<< avg << endl;
 }
 
-template <typename T>
-void max_array(T* arr, T* arr2, int size = -1, int size2 = -1)
+
+int max_array(int* arr, int* arr2, int size = -1, int size2 = -1)
 {
     int max = *arr;
     if (size == -1)
@@ -68,8 +68,8 @@ void max_array(T* arr, T* arr2, int size = -1, int size2 = -1)
     cout << "Max: "<< max << endl;
 }
 
-template <typename T>
-T* min_array(T* arr,T* arr2,int size =-1, int size2 =-1)
+
+int min_array(int* arr,int* arr2,int size =-1, int size2 =-1)
 {
     int* min = new int(150);
     if (size == -1)
@@ -98,7 +98,7 @@ T* min_array(T* arr,T* arr2,int size =-1, int size2 =-1)
     cout << "Min: "<< *min;
 }
 template <typename T>
-T* Action(T* arr,T* arr2,int size =-1, int size2 =-1){
+int Action(T* arr,T* arr2,int size =-1, int size2 =-1){
     if (size == -1)
     {
         size = _msize(arr) / sizeof * arr;
@@ -124,6 +124,7 @@ T* Action(T* arr,T* arr2,int size =-1, int size2 =-1){
 
 int main()
 {
+    int (*action_func[3])(int*, int*,int,int) = {min_array, max_array, avg_array};
     srand(time(0));
 
     cout << "Enter size for A: ";
@@ -150,13 +151,13 @@ int main()
             cout <<"Error! Write max or min or avg."<<endl;
         }
         if(action == "max"){
-            max_array(arr_i,arr_i2);
+            action_func[1](arr_i,arr_i2,-1,-1);
         }
         else if(action =="min"){
-            min_array(arr_i,arr_i2);
+            action_func[0](arr_i,arr_i2,-1,-1);
         }
         else if(action =="avg"){
-            avg_array(arr_i,arr_i2);
+            action_func[2](arr_i,arr_i2,-1,-1);
         }
         cout <<endl <<"Do u want try again?(y/n): ";
 
@@ -166,6 +167,9 @@ int main()
         }
         else if(answer == 'n'){
             break;
+        }
+        else{
+            continue;
         }
     } while (action != "max" ^ action != "min" ^ action != "avg" || answer != 'n' ^ answer != 'y');
 
